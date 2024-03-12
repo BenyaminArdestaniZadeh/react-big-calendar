@@ -1,0 +1,24 @@
+.rbc-calendar {
+  width: 1023px;
+}
+
+.rbc-month-view {
+  border-radius: 12px;
+}
+
+.rbc-header {
+  padding: 4px;
+}
+
+.navbar-button {
+  padding-inline: 49.5px;
+  padding-block: 7.5px;
+}
+
+.rbc-day-bg {
+  background-color: #f9f9f9;
+}
+
+.rbc-off-range-bg {
+  background-color: #e8e8e8;
+}
