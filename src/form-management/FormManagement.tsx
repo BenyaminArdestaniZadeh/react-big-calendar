@@ -11,8 +11,20 @@ import {
   TextArea,
   TextField,
 } from "@radix-ui/themes";
+import { FormProps } from "./form.types";
+import { useForm } from "react-hook-form";
 
 export default function FormManagement() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormProps>();
+
+  const onSubmit = (data: FormProps) => {
+    console.log(data);
+  };
+
   return (
     <Dialog.Root>
       <Dialog.Trigger>
@@ -32,9 +44,9 @@ export default function FormManagement() {
         </Button>
       </Dialog.Trigger>
       <Dialog.Content style={{ width: 560 }}>
-        <form>
-          <Flex direction={"column"} gap={"6"} dir="rtl">
-            <Dialog.Title style={{ color: "#3E63DD", marginBottom: 0 }}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Flex direction={"column"} gap={"1"} dir="rtl">
+            <Dialog.Title style={{ color: "#3E63DD" }}>
               افزودن پیام
             </Dialog.Title>
 
@@ -45,7 +57,24 @@ export default function FormManagement() {
               <TextField.Input
                 size={"3"}
                 placeholder="مثال : سالگرد تاسیس عود"
+                {...register("messageTitle", {
+                  required: {
+                    message: "لطفاً عنوان پیام را وارد کنید",
+                    value: true,
+                  },
+                })}
               />
+              {errors.messageTitle?.message && (
+                <Text
+                  size={"2"}
+                  weight={"medium"}
+                  as="label"
+                  color="tomato"
+                  style={{ marginTop: 5 }}
+                >
+                  {errors.messageTitle.message}
+                </Text>
+              )}
             </Flex>
             <Flex direction={"column"} gap={"2"} pb={"4"}>
               <Text as="label" style={{ paddingRight: 16 }}>
@@ -55,7 +84,24 @@ export default function FormManagement() {
                 size={"3"}
                 placeholder="متن پیام شما"
                 style={{ minHeight: 196 }}
+                {...register("message", {
+                  required: {
+                    message: "لطفاً پیام خود را بنویسید",
+                    value: true,
+                  },
+                })}
               />
+              {errors.message?.message && (
+                <Text
+                  size={"2"}
+                  weight={"medium"}
+                  as="label"
+                  color="tomato"
+                  style={{ marginTop: 5 }}
+                >
+                  {errors.message.message}
+                </Text>
+              )}
             </Flex>
             <Flex justify={"between"}>
               <Flex
@@ -68,11 +114,32 @@ export default function FormManagement() {
                   ساعت
                 </Text>
                 <TextField.Root>
-                  <TextField.Input size={"3"} placeholder="مثال : ۳۰ : ۱۵" />
+                  <TextField.Input
+                    size={"3"}
+                    placeholder="مثال : ۳۰ : ۱۵"
+                    {...register("time", {
+                      required: {
+                        message: "لطفاً زمان را وارد کنید",
+                        value: true,
+                      },
+                    })}
+                  />
+
                   <TextField.Slot>
                     <ClockIcon />
                   </TextField.Slot>
                 </TextField.Root>
+                {errors.time?.message && (
+                  <Text
+                    size={"2"}
+                    weight={"medium"}
+                    as="label"
+                    color="tomato"
+                    style={{ marginTop: 5 }}
+                  >
+                    {errors.time?.message}
+                  </Text>
+                )}
               </Flex>
 
               <Flex
@@ -85,11 +152,31 @@ export default function FormManagement() {
                   تاریخ
                 </Text>
                 <TextField.Root>
-                  <TextField.Input size={"3"} placeholder="مثال : ۱۴۰۱/۸/۲۴" />
+                  <TextField.Input
+                    size={"3"}
+                    placeholder="مثال : ۱۴۰۱/۸/۲۴"
+                    {...register("date", {
+                      required: {
+                        message: "لطفاً تاریخ را مشخص کنید",
+                        value: true,
+                      },
+                    })}
+                  />
                   <TextField.Slot>
                     <CalendarIcon />
                   </TextField.Slot>
                 </TextField.Root>
+                {errors.date?.message && (
+                  <Text
+                    size={"2"}
+                    weight={"medium"}
+                    as="label"
+                    color="tomato"
+                    style={{ marginTop: 5 }}
+                  >
+                    {errors.date?.message}
+                  </Text>
+                )}
               </Flex>
             </Flex>
             <Flex justify={"center"} gap={"6"}>
